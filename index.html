@@ -34,10 +34,13 @@
         <div id="progress_bar_in" class="progress-bar text-bg-success"></div>
       </div>
 
-      <div id="end_screen" class="d-none">
+      <div id="end_screen" class="d-none end_screen">
         <h2 class="m-3">Quiz beendet!</h2>
-        <div id="correct_answers" class="alert alert-success m-3" role="alert"></div>
-        <div id="wrong_answers" class="alert alert-danger m-3" role="alert"></div>
+        <div class="d-flex justify-content-center align-items-center">
+          <p id="correct_answers" class="alert alert-success m-3" role="alert"></p>
+          <p id="wrong_answers" class="alert alert-danger m-3" role="alert"></p>
+        </div>
+        <button id="restart_button" onclick="restartQuestions()" class="btn btn-warning m-3 ">Neustart</button>
       </div>
 
       <div id="question_container" class="card-body">

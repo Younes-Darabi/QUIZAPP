@@ -2,6 +2,8 @@ let currentQuestionNumber = 0;
 let CorrectAnswers = 0;
 let WrongAnswers = 0;
 let question = null;
+let AUDIO_SUCCESS = new Audio('audio/success.mp3');
+let AUDIO_FAIL = new Audio('audio/fail.mp3');
 
 let questions = [
     {
@@ -105,15 +107,25 @@ function ShowQuestion() {
 
 function answer(selection) {
     if (selection == question['right_answer']) {
-        document.getElementById(`answer${selection}`).style.background = "#198754";
-        CorrectAnswers++
+        ShowCorrectAnswer(selection)
     } else {
-        document.getElementById(`answer${selection}`).style.background = "#DC3545";
-        WrongAnswers++
+        ShowWrongAnswer(selection)
         document.getElementById(`answer${question['right_answer']}`).style.background = "yellow";
     }
     document.getElementById('next_button').disabled = false;
     disabledEnabledAnswer();
+}
+
+function ShowCorrectAnswer(selection) {
+    document.getElementById(`answer${selection}`).style.background = "#198754";
+    CorrectAnswers++
+    AUDIO_SUCCESS.play();
+}
+
+function ShowWrongAnswer(selection) {
+    document.getElementById(`answer${selection}`).style.background = "#DC3545";
+    WrongAnswers++
+    AUDIO_FAIL.play();
 }
 
 function nextQuestion() {
@@ -125,12 +137,7 @@ function nextQuestion() {
         }
         currentQuestionNumber++
     } else {
-        document.getElementById('header_image').src = "./img/trophy-1674911_1280.png"
-
-        document.getElementById('question_container').classList.add('d-none');
-        document.getElementById('end_screen').classList.remove('d-none');
-        document.getElementById('correct_answers').textContent = `Richtige Antworten: ${CorrectAnswers}`;
-        document.getElementById('wrong_answers').textContent = `Falsche Antworten: ${WrongAnswers}`;
+        showEndScreen();
     };
     document.getElementById('current_question_number').innerHTML = currentQuestionNumber + 1;
     document.getElementById('next_button').disabled = true;
@@ -139,12 +146,27 @@ function nextQuestion() {
     disabledEnabledAnswer();
 }
 
+function restartQuestions() {
+    currentQuestionNumber = 0;
+    CorrectAnswers = 0;
+    WrongAnswers = 0;
+    question = 0;
+
+    document.getElementById('header_image').src = "./img/01.jpg"
+    document.getElementById('question_container').classList.remove('d-none');
+    document.getElementById('end_screen').classList.add('d-none');
+    document.getElementById('next_button').innerHTML = "Nächate Frage";
+    document.getElementById('next_button').style.background = "#0D6EFD";
+    init();
+}
+
 function backgroundColorReset() {
     document.getElementById('answer1').style.background = "white";
     document.getElementById('answer2').style.background = "white";
     document.getElementById('answer3').style.background = "white";
     document.getElementById('answer4').style.background = "white";
 }
+
 function disabledEnabledAnswer() {
     document.getElementById('answer1').classList.toggle('pe-none');
     document.getElementById('answer2').classList.toggle('pe-none');
@@ -160,4 +182,12 @@ function progressBar() {
     let percent = Math.round(((currentQuestionNumber + 1) / questions.length) * 100);
     document.getElementById('progress_bar_in').innerHTML = `${percent}%`;
     document.getElementById('progress_bar_in').style.width = `${percent}%`;
+}
+
+function showEndScreen() {
+    document.getElementById('header_image').src = "./img/trophy-1674911_1280.png"
+    document.getElementById('question_container').classList.add('d-none');
+    document.getElementById('end_screen').classList.remove('d-none');
+    document.getElementById('correct_answers').textContent = `Richtige Antworten: ${CorrectAnswers}`;
+    document.getElementById('wrong_answers').textContent = `Falsche Antworten: ${WrongAnswers}`;
 }
