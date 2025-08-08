@@ -1,5 +1,5 @@
 body{
-background-color: #007AFF !important;
+    background-color: #007AFF !important;
 }
 
 .container{
@@ -22,7 +22,7 @@ background-color: #007AFF !important;
     width: 600px;
 }
 .quiz_answer_card{
-    transition: all 500ms ease-in-out;
+    transition: all 200ms ease-in-out;
 
 }
 .quiz_answer_card:hover{

@@ -1,4 +1,7 @@
 let currentQuestionNumber = 0;
+let CorrectAnswers = 0;
+let WrongAnswers = 0;
+let question = null;
 
 let questions = [
     {
@@ -86,32 +89,75 @@ let questions = [
 
 function init() {
     document.getElementById('TotalNumberOfQuestions').innerHTML = questions.length;
-    document.getElementById('current_question_number').innerHTML = currentQuestionNumber+1;
+    document.getElementById('current_question_number').innerHTML = currentQuestionNumber + 1;
     ShowQuestion();
 }
 
 function ShowQuestion() {
-    let question = questions[currentQuestionNumber];
+    question = questions[currentQuestionNumber];
     document.getElementById('question_text').innerHTML = question['question'];
     document.getElementById('answer_1').innerHTML = question['answer_1'];
     document.getElementById('answer_2').innerHTML = question['answer_2'];
     document.getElementById('answer_3').innerHTML = question['answer_3'];
     document.getElementById('answer_4').innerHTML = question['answer_4'];
-
+    progressBar();
 }
 
-function nextQuestion(){
-    if(currentQuestionNumber<9){currentQuestionNumber++};
-    document.getElementById('current_question_number').innerHTML = currentQuestionNumber+1;
+function answer(selection) {
+    if (selection == question['right_answer']) {
+        document.getElementById(`answer${selection}`).style.background = "#198754";
+        CorrectAnswers++
+    } else {
+        document.getElementById(`answer${selection}`).style.background = "#DC3545";
+        WrongAnswers++
+        document.getElementById(`answer${question['right_answer']}`).style.background = "yellow";
+    }
+    document.getElementById('next_button').disabled = false;
+    disabledEnabledAnswer();
+}
+
+function nextQuestion() {
+    if (currentQuestionNumber < questions.length - 1) {
+        if (currentQuestionNumber == questions.length - 2) {
+            let finish = document.getElementById('next_button');
+            finish.innerHTML = "Finish";
+            finish.style.background = "green";
+        }
+        currentQuestionNumber++
+    } else {
+        document.getElementById('header_image').src = "./img/trophy-1674911_1280.png"
+
+        document.getElementById('question_container').classList.add('d-none');
+        document.getElementById('end_screen').classList.remove('d-none');
+        document.getElementById('correct_answers').textContent = `Richtige Antworten: ${CorrectAnswers}`;
+        document.getElementById('wrong_answers').textContent = `Falsche Antworten: ${WrongAnswers}`;
+    };
+    document.getElementById('current_question_number').innerHTML = currentQuestionNumber + 1;
+    document.getElementById('next_button').disabled = true;
     ShowQuestion();
+    backgroundColorReset();
+    disabledEnabledAnswer();
 }
 
-function previousQuestion(){
-    if(currentQuestionNumber>0){currentQuestionNumber--};
-    document.getElementById('current_question_number').innerHTML = currentQuestionNumber+1;
-    ShowQuestion(); 
+function backgroundColorReset() {
+    document.getElementById('answer1').style.background = "white";
+    document.getElementById('answer2').style.background = "white";
+    document.getElementById('answer3').style.background = "white";
+    document.getElementById('answer4').style.background = "white";
+}
+function disabledEnabledAnswer() {
+    document.getElementById('answer1').classList.toggle('pe-none');
+    document.getElementById('answer2').classList.toggle('pe-none');
+    document.getElementById('answer3').classList.toggle('pe-none');
+    document.getElementById('answer4').classList.toggle('pe-none');
+    document.getElementById('answer1').classList.toggle('opacity-75');
+    document.getElementById('answer2').classList.toggle('opacity-75');
+    document.getElementById('answer3').classList.toggle('opacity-75');
+    document.getElementById('answer4').classList.toggle('opacity-75');
 }
 
-function answer(selection){
-    
+function progressBar() {
+    let percent = Math.round(((currentQuestionNumber + 1) / questions.length) * 100);
+    document.getElementById('progress_bar_in').innerHTML = `${percent}%`;
+    document.getElementById('progress_bar_in').style.width = `${percent}%`;
 }

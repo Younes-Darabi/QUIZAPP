@@ -27,33 +27,41 @@
   </nav>
 
   <div class="container">
-
     <div class="card quit_card">
+      <img id="header_image" src="./img/01.jpg" class="card-img-top" alt="Quiz Bild">
 
-      <img src="./img/01.jpg" class="card-img-top" alt="Quiz Bild">
+      <div id="progress_bar" class="progress rounded-0" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        <div id="progress_bar_in" class="progress-bar text-bg-success"></div>
+      </div>
 
-      <div class="card-body">
+      <div id="end_screen" class="d-none">
+        <h2 class="m-3">Quiz beendet!</h2>
+        <div id="correct_answers" class="alert alert-success m-3" role="alert"></div>
+        <div id="wrong_answers" class="alert alert-danger m-3" role="alert"></div>
+      </div>
+
+      <div id="question_container" class="card-body">
         <h5 id="question_text" class="card-title">Frage</h5>
 
-        <div onclick="answer('1')" class="card mb-2 quiz_answer_card">
+        <div id="answer1" onclick="answer('1')" class="card mb-2 quiz_answer_card">
           <div id="answer_1" class="card-body">
             Antwort1
           </div>
         </div>
 
-        <div onclick="answer('2')" class="card mb-2 quiz_answer_card">
+        <div id="answer2" onclick="answer('2')" class="card mb-2 quiz_answer_card">
           <div id="answer_2" class="card-body">
             Antwort2
           </div>
         </div>
 
-        <div onclick="answer('3')" class="card mb-2 quiz_answer_card">
+        <div id="answer3" onclick="answer('3')" class="card mb-2 quiz_answer_card">
           <div id="answer_3" class="card-body">
             Antwort3
           </div>
         </div>
 
-        <div onclick="answer('4')" class="card mb-2 quiz_answer_card">
+        <div id="answer4" onclick="answer('4')" class="card mb-2 quiz_answer_card">
           <div id="answer_4" class="card-body">
             Antwort4
           </div>
@@ -62,8 +70,7 @@
         <div class="question_footer">
           <span><b id="current_question_number">1</b> von <b id="TotalNumberOfQuestions">5</b> Fragen</span>
           <div>
-            <a onclick="previousQuestion()" href="#" class="btn btn-primary">Vorherige Frage</a>
-            <a onclick="nextQuestion()" href="#" class="btn btn-primary">Nächate Frage</a>
+            <button id="next_button" onclick="nextQuestion()" class="btn btn-primary" disabled>Nächate Frage</button>
           </div>
         </div>
 
